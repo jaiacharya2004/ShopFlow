@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -42,63 +43,72 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shopflowapp.data.model.Product
 import com.example.shopflowapp.ui.theme.component.CategoryRow
-import com.example.shopflowapp.ui.theme.component.ProductCard
 import com.example.shopflowapp.ui.theme.component.ProductListItem
 import com.example.shopflowapp.ui.theme.component.PromoCard
 import com.example.shopflowapp.ui.theme.component.ShopTopBar
 import com.example.shopflowapp.viewmodel.ShopViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
-
 @Composable
 fun ShopScreen(viewModel: ShopViewModel = viewModel()) {
     val products = viewModel.products.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = Color(0xFF424242)
     ) {
         Column {
             ShopTopBar(onBackClick = {
-                // Handle back navigation if needed
             })
 
-            Column(modifier = Modifier.padding(16.dp)) {
-                PromoCard()
-                Spacer(modifier = Modifier.height(16.dp))
-                CategoryRow()
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("New products", style = MaterialTheme.typography.titleLarge)
-                    Text("See all", style = MaterialTheme.typography.labelLarge)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(top = 16.dp, bottom = 100.dp)
+            ) {
+                item {
+                    PromoCard()
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                item {
+                    CategoryRow()
+                }
+
+                item {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("New products",     style = MaterialTheme.typography.titleMedium.copy(
+                            fontFamily = FontFamily.Serif, fontSize = 20.sp))
+                        Text("See all",     style = MaterialTheme.typography.titleMedium.copy(
+                            fontFamily = FontFamily.Serif,))
+                    }
+                }
+
 
                 if (products.value.isEmpty()) {
-                    Text("No products found.", modifier = Modifier.padding(26.dp))
+                    item {
+                        Text("No products found.", modifier = Modifier.padding(26.dp))
+                    }
                 } else {
-                    LazyColumn(verticalArrangement = Arrangement.spacedBy(26.dp)) {
-                        items(products.value) { product ->
-                            ProductListItem(product)
-                        }
+                    itemsIndexed(products.value) { index, product ->
+                        ProductListItem(product = product)
                     }
                 }
             }
+
         }
     }
 }
-
-
-
 
 
 

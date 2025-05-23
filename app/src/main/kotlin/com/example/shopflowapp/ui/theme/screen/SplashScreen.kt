@@ -16,7 +16,7 @@ import com.example.shopflowapp.R
 fun SplashScreen(navController: NavController) {
     // Delay 2 seconds and navigate to shop screen
     LaunchedEffect(Unit) {
-        delay(2000L)
+        delay(1500L)
         navController.navigate("shop") {
             popUpTo("splash") { inclusive = true } // Remove splash from backstack
         }
@@ -27,7 +27,7 @@ fun SplashScreen(navController: NavController) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.cart3), // Your splash logo image here
+            painter = painterResource(id = R.drawable.logo), // Your splash logo image here
             contentDescription = "App Logo",
             modifier = Modifier.size(180.dp)
         )

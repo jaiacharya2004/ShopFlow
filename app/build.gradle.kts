@@ -48,6 +48,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.0")
 
 
+// Material 3
+    implementation("androidx.compose.material3:material3:1.3.2")
+
 
     //    Navigation for Compose
 

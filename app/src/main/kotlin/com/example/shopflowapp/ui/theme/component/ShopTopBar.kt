@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,10 +40,15 @@ fun ShopTopBar(onBackClick: () -> Unit = {}) {
                 }
                 Text(
                     text = "Shop",
+//                    style = MaterialTheme.typography.titleLarge.copy(
+//                        fontWeight = FontWeight.SemiBold,
+//                        fontSize = 20.sp
+//                    ),
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 20.sp
-                    ),
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Serif
+                        ),
                     modifier = Modifier.padding(start = 4.dp)
                 )
             }
@@ -52,7 +58,7 @@ fun ShopTopBar(onBackClick: () -> Unit = {}) {
                 Icon(Icons.Default.Search, contentDescription = "Search")
             }
             IconButton(onClick = { /* TODO: Like/Favorite */ }) {
-                Icon(Icons.Default.Favorite, contentDescription = "Favorite", tint = Color.Green)
+                Icon(Icons.Default.Favorite, contentDescription = "Favorite", tint = Color.White)
             }
             IconButton(onClick = { /* TODO: Cart */ }) {
                 Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = Color.Green)

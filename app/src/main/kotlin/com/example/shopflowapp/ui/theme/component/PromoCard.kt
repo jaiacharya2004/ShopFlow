@@ -1,9 +1,11 @@
 package com.example.shopflowapp.ui.theme.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,21 +26,22 @@ fun PromoCard() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(180.dp)
     ) {
         // Grey background image
         Image(
-            painter = painterResource(id = R.drawable.card_black_shape),
+            painter = painterResource(id = R.drawable.shopflowcard1),
             contentDescription = "Promo Card Background",
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(2.dp))
         )
 
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(25.dp)
                 .fillMaxWidth()
         ) {
             Text(
@@ -53,11 +56,20 @@ fun PromoCard() {
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(Modifier.height(8.dp))
-            Text(
-                text = "Till 31 October",
-                color = Color(0xFFB8FF3B), // Same green accent color
-                style = MaterialTheme.typography.labelLarge
-            )
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = Color(0xFFB8FF3B), // Your green accent color
+                        shape = RoundedCornerShape(50) // Fully rounded corners
+                    )
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Text(
+                    text = "Till 31 June",
+                    color = Color.Black, // Same green accent color
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
         }
     }
 }

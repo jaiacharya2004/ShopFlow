@@ -27,7 +27,13 @@ class ProductRepository {
                 originalPrice = watchOriginalPrice,
                 price = 355.20, // discounted price shown first
                 imageResId = R.drawable.categorysample
-            )
+            ),
+            Product(
+                name = "Stylish Shoes",
+                originalPrice = shoeOriginalPrice,
+                price = 355.20, // discounted price shown first
+                imageResId = R.drawable.product_image
+            ),
         )
     }
 }

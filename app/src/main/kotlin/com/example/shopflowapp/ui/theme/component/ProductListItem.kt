@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,31 +34,31 @@ import com.example.shopflowapp.data.model.Product
 fun ProductListItem(
     product: Product,
     onAddToCart: () -> Unit = {},
-    onFavoriteClick: () -> Unit = {} // Add this parameter for favorite click handling
+    onFavoriteClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(20.dp)
     ) {
         // First card - for product image (larger card)
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(410.dp),
-            shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(4.dp)
+                .height(460.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFF424242)
+            )
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 // Background image for the first card
                 Image(
                     painter = painterResource(id = R.drawable.card_grey_bg_png),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillHeight,
                     modifier = Modifier.matchParentSize()
                 )
 
-                // Favorites heart icon - ADDED THIS SECTION
+                // Favorites heart icon
                 IconButton(
                     onClick = onFavoriteClick,
                     modifier = Modifier
@@ -64,13 +66,11 @@ fun ProductListItem(
                         .align(Alignment.TopStart)
                         .padding(6.dp),
                     colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = Color.White.copy(alpha = 0.9f),
-                        contentColor = Color.Red
+                        containerColor = Color.Black.copy(alpha = 0.9f),
+                        contentColor = Color(0xFFBA68C8)
                     )
                 ) {
-                    IconButton(onClick = { /* TODO: Like/Favorite */ }) {
-                        Icon(Icons.Default.Favorite, contentDescription = "Favorite")
-                    }
+                    Icon(Icons.Default.Favorite, contentDescription = "Favorite")
                 }
 
                 // Product image centered in the first card
@@ -79,30 +79,22 @@ fun ProductListItem(
                     contentDescription = product.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .height(200.dp)
+                        .height(290.dp)
                         .align(Alignment.TopCenter)
                         .clip(RoundedCornerShape(12.dp))
-                        .border(
-                            width = 1.dp,
-                            color = Color.LightGray.copy(alpha = 0.5f),
-                            shape = RoundedCornerShape(12.dp)
-                        )
                 )
             }
         }
 
-
-
         // Second card - for product details (overlay on bottom)
-        // Second card - for product details (overlay on bottom) with background image
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(130.dp) // Height for details card
+                .padding(start = 15.dp, end = 15.dp)
+                .height(130.dp)
                 .align(Alignment.BottomCenter)
-                .offset(y = (-16).dp), // Slightly overlap the first card
+                .offset(y = (-16).dp),
             shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(8.dp) // Higher elevation for overlay effect
+            elevation = CardDefaults.cardElevation(8.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -120,7 +112,7 @@ fun ProductListItem(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f)) // Dark overlay for better text visibility
+                        .background(Color.Black.copy(alpha = 0.3f))
                         .padding(16.dp)
                 ) {
                     Column(
@@ -172,12 +164,11 @@ fun ProductListItem(
 
                                 if (originalPrice > product.price) {
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    val discountPercent =
-                                        ((originalPrice - product.price) / originalPrice * 100).toInt()
+                                    val discountPercent = ((originalPrice - product.price) / originalPrice * 100).toInt()
                                     Text(
                                         text = "$discountPercent% OFF",
                                         style = MaterialTheme.typography.labelSmall.copy(
-                                            color = Color(0xFFFFD700) // Gold color for discount
+                                            color = Color(0xFFFFD700)
                                         ),
                                         modifier = Modifier
                                             .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -205,7 +196,7 @@ fun ProductListItem(
                                 Icon(
                                     imageVector = Icons.Default.Star,
                                     contentDescription = "Rating",
-                                    tint = Color(0xFFFFD700), // Gold color for stars
+                                    tint = Color(0xFFFFD700),
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -223,7 +214,7 @@ fun ProductListItem(
                                 )
                             }
 
-                            // Add to cart button
+                            // Add to cart button (kept on second card)
                             FilledIconButton(
                                 onClick = onAddToCart,
                                 modifier = Modifier.size(36.dp),
@@ -231,13 +222,12 @@ fun ProductListItem(
                                     containerColor = Color.Transparent,
                                     contentColor = MaterialTheme.colorScheme.primary
                                 ),
-                                shape = CircleShape // This makes the button circular
-
+                                shape = CircleShape
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.cart3), // Your custom cart icon
+                                    painter = painterResource(id = R.drawable.cart3),
                                     contentDescription = "Add to cart",
-                                    modifier = Modifier.size(20.dp),
+                                    modifier = Modifier.size(60.dp),
                                 )
                             }
                         }
